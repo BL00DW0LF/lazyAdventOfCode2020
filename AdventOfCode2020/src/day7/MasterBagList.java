@@ -104,6 +104,68 @@ public class MasterBagList {
 		return containerCount;
 	}
 	
+	/*public int numWithin(String adj, String clr) {//this method does not work. a graveyard method
+		int containerCount=0;
+		
+		BagType thisBag = findBag(adj,clr);//always search the master list for correct bag instance
+		
+		
+		containerCount+=thisBag.countBagsInside();//add the quantities immediately available
+		System.out.println(adj+" "+clr+" contains "+ thisBag.countBagsInside()+" bags inside at layer 1");
+		
+		
+		for (int i=0;i<thisBag.typesInside();i++) {//going to recursively count bags
+			
+			BagType tempBag=thisBag.getInnerBag(i);//do not trust tempbag for anything other than name
+			
+			
+			
+			
+			//need to multiply so let's slow this down
+			int tempCount=this.numWithin(tempBag.getAdjective(), tempBag.getColor());//get the recursive peek at inner bag of index i
+			System.out.println("for "+tempBag.getAdjective()+" "+tempBag.getColor()+" bag, it contains "+tempCount);
+			
+			
+			//System.out.println("toBeAdded= "+tempCount+ " times "+tempBag.quantAtIndex(i));
+			containerCount=containerCount + (tempCount*tempBag.quantAtIndex(i));
+			//System.out.println("containerCount= "+containerCount);
+		}
+		
+		return containerCount;
+	}*/
+	
+	
+	public int getValue(String adj, String clr) {
+		int valueCount=1;//include self in value
+		
+		BagType thisBag = findBag(adj,clr);//always search the master list for correct bag instance
+		
+		if (thisBag.typesInside()==0) {
+			//System.out.println(adj+" "+clr+" has a value of 1");
+			return valueCount;//this bag is empty and thus just counts as itself
+			
+		}
+			
+		else {
+			//recursion
+			for (int i=0;i<thisBag.typesInside();i++) {
+				BagType tempBag=thisBag.getInnerBag(i);//do not trust tempbag for anything other than name
+				valueCount += thisBag.quantAtIndex(i)*getValue(tempBag.getAdjective(), tempBag.getColor());//multiply the quantity of bags inside by the value of the bag
+				
+			}
+			
+			
+			
+			
+			
+		}
+		
+		
+		//System.out.println(adj+" "+clr+" has a value of "+valueCount);
+		return valueCount;		
+	}
+	
+	
 	public BagType getTrueBag(BagType findMe) {
 		
 		

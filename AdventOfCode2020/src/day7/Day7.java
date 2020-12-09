@@ -108,9 +108,12 @@ public class Day7 {
 		
 		
 		//print incremented counter for part 1
-		//do I need to subtract one because it's counting itself?
-		System.out.println("Counter for part 1: "+theList.mayContain("shiny", "gold"));
+		//do I need to subtract one because it's counting itself?  no I accounted for that, it's the "This is just the bag you're looking for." line
+		System.out.println("Counter for part 1: "+theList.mayContain("shiny", "gold"));//take a loong time to run, very inefficient
 		
+		
+		//getting value of bags in bags for part two.  DO need to subtract one to get answer for Advent of Code, because we're not counting our gold bag (bags within gold bag)
+		System.out.println("Counter for part 2: "+theList.getValue("shiny", "gold")+" minus one (given number is value of the bag)");
 		
 		
 	}

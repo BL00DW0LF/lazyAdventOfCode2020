@@ -91,6 +91,26 @@ public class BagType {
 		
 	}
 	
+	public int countBagsInside() {//count immediately inside bags, do the recursion elsewhere, with the master list
+		int counter=0;
+		for (int i=0;i<contains.size();i++) {
+			counter+=containsQuant.get(i);
+			
+		}
+		return counter;
+	}
+	
+	public BagType getInnerBag(int index) {
+		
+		return contains.get(index);
+	}
+	
+	public int quantAtIndex(int index) {
+		if (containsQuant.size()==0)
+			return 0;
+		else
+			return containsQuant.get(index);
+	}
 	/*public void updateContainers(MasterBagList bigList) {
 		for (int i=0; i<contains.size();i++) {
 			//for each bag inside this object, update it from the master list
