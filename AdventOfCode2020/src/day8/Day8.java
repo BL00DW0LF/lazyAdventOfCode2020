@@ -19,7 +19,8 @@ public class Day8 {
 		System.out.println("Answer for part 1: "+part1);
 		
 		
-		
+		//for part 2.  make two new methods, doesProgramTerminate(data, dupe, indexToFlip) + executeCorrectedProgram(data, dupe, indexToFlip)
+		//maybe needs a third method testFlipAll(data, dupe), returning int indexToFlip.   If we parse it as it would be written, we don't test flips for any lines that would never be ran anyway.  
 		
 		
 		
