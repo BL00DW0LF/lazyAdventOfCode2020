@@ -48,7 +48,7 @@ public class BagType {
 		for (int i=0;i<contains.size();i++) {
 			//for each bagtype in contains
 			
-			if(contains.get(i).mayContain(adj, clr, bigList)) {
+			if(bigList.getTrueBag(contains.get(i)).mayContain(adj, clr, bigList)) {
 				doesItContain=true;
 				//System.out.println(contains.get(i).getName()+" may contain target at i="+i);//why does this always say shiny gold?
 				

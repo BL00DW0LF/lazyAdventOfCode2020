@@ -100,9 +100,16 @@ public class MasterBagList {
 		
 		
 		
-	}
+		}
 		return containerCount;
 	}
+	
+	public BagType getTrueBag(BagType findMe) {
+		
+		
+		return findBag(findMe.getAdjective(),findMe.getColor());
+	}
+	
 	
 	/*public void updateAll() {
 		for(int i=0; i<bigList.size();i++) {
