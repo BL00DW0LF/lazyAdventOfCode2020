@@ -31,39 +31,59 @@ public class Day7 {
 				tempIn=fileReader.nextLine();
 				//System.out.println(tempIn);
 				tokens=tempIn.split(delims);
-				BagType thisBag;
+				BagType thisBag= new BagType();
 			
 				
 				//parse the line, token by token, but also line by line
 				for (int i=0;i<tokens.length;i++) {
-					if (tokens[i].equals("bag") || tokens[i].equals("bags") || tokens[i].equals("contain") || tokens[i].isEmpty()) {
-						//then we don't care about it
+					if (tokens[i].equals("bag") || tokens[i].equals("bags") || tokens[i].equals("contain") || tokens[i].equals("no") || tokens[i].equals("other") || tokens[i].isEmpty()) {
+						//then we don't care about it.  I hope
 						
 					}
-					else{
-						//real shit.  don't parse token by token? assemble it as a phrase?  looks like may contain up to 4 different bag types.  how to handle? this should work
+					else{//we do care about this token
+						String adj;
+						String clr;
+						//real shit.  don't parse token by token? assemble it as a phrase?  looks like may contain up to 4 different bag types.  how to handle? this should work:
 						
 						//if this is token 0(and 1), definitely need to update master bag list, even if it's in there already
 						//don't forget to increment i so we don't double count
-						
-						
-						
-						
-						//first check if token is an integer, store it in tempQuant
-
-						
-						// if not token 0, and not integer, pass int and this token and next token into addBagInside for current thisBag
-						//don't forget to increment i so we don't double count
-						
-						
-					}
+						if (i==0) {
+							adj=tokens[i];
+							clr=tokens[i+1];
+							i++;
+							thisBag=theList.findBag(adj, clr);
+							if (thisBag==null) {//if this is a brand new bag, let's create it
+								thisBag=new BagType(adj, clr);
+							}
+							else {
+								//does this ever happen?
+								System.out.println("it happens");
+								//no, it doesn't happen.
+							}
+							
+						}
+						else if (tokens[i].chars().allMatch( Character::isDigit )){//first check if token is an integer, store it in tempQuant
+							tempQuant=Integer.parseInt(tokens[i]);
+							
+							// if not token 0, and not integer, pass int and this token and next token into addBagInside for current thisBag
+							//don't forget to increment i so we don't double count
+							adj=tokens[i+1];
+							clr=tokens[i+2];
+							i++;i++;
+							
+							BagType bagInside = new BagType(adj,clr);
+							thisBag.addBagInside(bagInside, tempQuant);
+						}
+						else {
+							//this claims to be a token we care about, but it wasn't predicted
+							System.out.println("Uhh, shouldn't be here, token = "+tokens[i]);
+						}
+					}//end else for tokens we care about
 					
 					
 				}//end for loop parsing current line
-				
-				
 				//so now we've parsed the whole line, we can add thisBag to master bag list
-					
+				theList.addBag(thisBag);
 					
 					
 			}//done reading file. do we have to do anything here or can we close it?
@@ -84,10 +104,12 @@ public class Day7 {
 		
 		
 		//for loop through masterbaglist, and increment a counter for each one that can contain shiny gold bag
+		//actually no that's not going to work because I did not recursively update the master list when I came across a new bag.
 		
 		
 		//print incremented counter for part 1
-		
+		//do I need to subtract one because it's counting itself?
+		System.out.println("Counter for part 1: "+theList.mayContain("shiny", "gold"));
 		
 		
 		
