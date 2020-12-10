@@ -14,13 +14,14 @@ public class Day9 {
 		String part1Answer=inputAndProcess();
 		System.out.println("Answer for Part 1: "+part1Answer);
 		
-		
+		long part2Answer=findContiguousSum(Long.parseLong(part1Answer));
+		System.out.println("Answer for Part 2: "+part2Answer);
 	}
 
 
 
 
-//why did I write this?
+
 public static String inputAndProcess(){
 	ArrayList<KeyedDataPair> data= new ArrayList<KeyedDataPair>();
 	int indexHigh=0;//to keep track of the most recently added data
@@ -120,6 +121,84 @@ public static boolean isThereSum(ArrayList<KeyedDataPair> data, String target) {
 	
 	return false;
 }
+
+
+
+public static long findContiguousSum(long targetSum) {
+	long runningSum=0;
+	ArrayList<KeyedDataPair> data= new ArrayList<KeyedDataPair>();
+	int indexHigh=0;//to keep track of the most recently added data
+	
+	
+	try{
+		File input = new File("day9Input.txt");
+		Scanner fileReader = new Scanner (input);
+		
+		while (fileReader.hasNextLine()) {
+			
+			
+			
+			//get future line
+			Long tempValue=Long.parseLong(fileReader.nextLine());
+			
+			
+			
+			if (runningSum<targetSum) {//we just need to add another number
+				
+				//can just do below? do nothing here?
+			}
+			else if (runningSum>targetSum) {
+				System.out.println("Size of contiguous attempt before removing: "+data.size());
+				
+				//we need to remove numbers from the front of data (and subtract from runningSum) until runningSum<targetSum
+				while(runningSum>targetSum) {
+					runningSum-=data.get(0).getValue();
+					data.remove(0);
+				}//when this loop is done, we should be ready to add a new number below
+				
+			}
+			else {//then runningSum == targetSum
+				if (tempValue==targetSum) {
+					System.out.println("We have gone too far trying to find a sum.");
+					fileReader.close();
+					return -1;
+				}
+				
+				
+				
+				//need to find lowest value and highest value, sum them together, and return
+				//sort data first
+				Collections.sort(data, new KeyedValueComparator());
+				fileReader.close();
+				long low=data.get(0).getValue();
+				long high=data.get(data.size()-1).getValue();
+				System.out.println("Low consec: "+low);
+				System.out.println("High consec: "+high);
+				return (low + high);//sum highest and lowest values (first and last in data)
+				
+				
+			}
+			data.add(new KeyedDataPair(indexHigh,tempValue));
+			runningSum+=tempValue;
+			indexHigh++;
+			
+		}//we have reached end of file
+		fileReader.close();
+		System.out.println("End of File for part 2. Uh oh...");
+		//System.out.println("Total lines read: "+indexHigh);
+		
+	}
+	catch(FileNotFoundException e) {
+		System.out.println("File Read error");
+		e.printStackTrace();
+	}
+	
+	
+	
+	
+	return -1;
+}
+
 
 
 }
