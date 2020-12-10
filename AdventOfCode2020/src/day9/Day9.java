@@ -148,24 +148,28 @@ public static long findContiguousSum(long targetSum) {
 				//can just do below? do nothing here?
 			}
 			else if (runningSum>targetSum) {
-				System.out.println("Size of contiguous attempt before removing: "+data.size());
+				//we need to remove a bunch of early numbers until we have room for tempValue
 				
-				//we need to remove numbers from the front of data (and subtract from runningSum) until runningSum<targetSum
-				while(runningSum>targetSum) {
+				do {
 					runningSum-=data.get(0).getValue();
 					data.remove(0);
-				}//when this loop is done, we should be ready to add a new number below
+					
+					
+				}
+				while (runningSum>targetSum);
+				//when this loop is done, we should be ready to add a new number below
+				
 				
 			}
 			else {//then runningSum == targetSum
-				if (tempValue==targetSum) {
+				if (data.size()==1) {
 					System.out.println("We have gone too far trying to find a sum.");
 					fileReader.close();
 					return -1;
 				}
 				
 				
-				
+				//success lies here.  if only....
 				//need to find lowest value and highest value, sum them together, and return
 				//sort data first
 				Collections.sort(data, new KeyedValueComparator());
@@ -178,6 +182,19 @@ public static long findContiguousSum(long targetSum) {
 				
 				
 			}
+			
+			//do one last check because it's easier than rewriting this whole function
+			if (runningSum==targetSum) {
+				Collections.sort(data, new KeyedValueComparator());
+				fileReader.close();
+				long low=data.get(0).getValue();
+				long high=data.get(data.size()-1).getValue();
+				System.out.println("Low consec: "+low);
+				System.out.println("High consec: "+high);
+				return (low + high);//sum highest and lowest values (first and last in data)
+				
+			}
+			
 			data.add(new KeyedDataPair(indexHigh,tempValue));
 			runningSum+=tempValue;
 			indexHigh++;
@@ -198,6 +215,60 @@ public static long findContiguousSum(long targetSum) {
 	
 	return -1;
 }
+
+public static long findContiguousSum2(long targetSum) {
+	long runningSum=0;
+	ArrayList<Long> data= new ArrayList<Long>();
+	int indexHigh=0;//to keep track of the most recently added data
+	
+	
+	try{//let's just assume we're going to find it, screw the crashes
+		File input = new File("day9Input.txt");
+		Scanner fileReader = new Scanner (input);
+		
+		Long tempValue=Long.parseLong(fileReader.nextLine());
+		
+		
+		//get the first flurry out of the way
+		while((runningSum+tempValue)<targetSum) {
+			runningSum+=tempValue;
+			data.add(tempValue);
+			
+			tempValue=Long.parseLong(fileReader.nextLine());
+		}
+		//once we get here, we have an unused tempValue, but runningSum is too high to add.
+		boolean notFoundYet=true;
+		
+		while(notFoundYet) {
+			if ((runningSum+tempValue)>targetSum){
+				
+				
+				
+			}
+			
+		}
+		
+		
+		
+			
+		//we have reached end of file
+		fileReader.close();
+		System.out.println("End of File for part 2. Uh oh...");
+		//System.out.println("Total lines read: "+indexHigh);
+		
+	}
+	catch(FileNotFoundException e) {
+		System.out.println("File Read error");
+		e.printStackTrace();
+	}
+	
+	
+	
+	
+	return -1;
+}
+
+
 
 
 
